@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Valentine Gateway 💘</title>
+  <style>
+    :root{
+      --bg1:#120014;
+      --bg2:#3a003a;
+      --pink:#ff4da6;
+      --rose:#ff2e77;
+      --soft:#ffd1e8;
+      --glass: rgba(255,255,255,0.08);
+      --stroke: rgba(255,255,255,0.18);
+      --good: rgba(0, 255, 170, 0.18);
+      --bad: rgba(255, 80, 120, 0.18);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body{
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans";
+      color: white;
+      overflow: hidden;
+      background:
+        radial-gradient(1200px 600px at 20% 20%, rgba(255,77,166,0.22), transparent 60%),
+        radial-gradient(1000px 600px at 80% 30%, rgba(255,46,119,0.18), transparent 60%),
+        radial-gradient(900px 500px at 50% 80%, rgba(255,209,232,0.12), transparent 60%),
+        linear-gradient(135deg, var(--bg1), var(--bg2));
+    }
+
+    .sparkles{
+      position:absolute; inset:0;
+      background-image:
+        radial-gradient(2px 2px at 20% 30%, rgba(255,255,255,0.5), transparent 60%),
+        radial-gradient(1.5px 1.5px at 65% 22%, rgba(255,255,255,0.35), transparent 60%),
+        radial-gradient(1.8px 1.8px at 80% 60%, rgba(255,255,255,0.25), transparent 60%),
+        radial-gradient(1.2px 1.2px at 35% 70%, rgba(255,255,255,0.22), transparent 60%),
+        radial-gradient(1.6px 1.6px at 55% 45%, rgba(255,255,255,0.2), transparent 60%);
+      filter: blur(0.2px);
+      opacity: 0.6;
+      animation: twinkle 4s ease-in-out infinite;
+      pointer-events:none;
+    }
+    @keyframes twinkle {
+      0%,100% { opacity: 0.45; transform: scale(1); }
+      50% { opacity: 0.75; transform: scale(1.01); }
+    }
+
+    .hearts {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .heart {
+      position: absolute;
+      bottom: -60px;
+      font-size: 18px;
+      opacity: 0.85;
+      filter: drop-shadow(0 6px 14px rgba(255,77,166,0.35));
+      animation: floatUp linear infinite;
+      transform: translateX(0) scale(1);
+      user-select: none;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(0) translateX(0) rotate(0deg) scale(0.9); opacity: 0; }
+      10% { opacity: 0.85; }
+      100% { transform: translateY(-115vh) translateX(40px) rotate(20deg) scale(1.35); opacity: 0; }
+    }
+
+    .wrap{
+      position: relative;
+      height: 100%;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+    }
+
+    .card{
+      width: min(740px, 92vw);
+      padding: 34px 26px;
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.05));
+      border: 1px solid var(--stroke);
+      box-shadow:
+        0 18px 60px rgba(0,0,0,0.45),
+        0 0 80px rgba(255,77,166,0.15);
+      backdrop-filter: blur(10px);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(600px 200px at 50% 0%, rgba(255,77,166,0.25), transparent 60%);
+      pointer-events:none;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,77,166,0.12);
+      border: 1px solid rgba(255,77,166,0.25);
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      color: var(--soft);
+      box-shadow: 0 10px 25px rgba(255,77,166,0.10);
+      margin-bottom: 14px;
+    }
+
+    h1{
+      margin: 8px 0 10px;
+      font-size: clamp(26px, 4vw, 46px);
+      line-height: 1.05;
+      letter-spacing: -0.5px;
+      text-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    }
+
+    .subtitle{
+      margin: 0 auto 22px;
+      max-width: 60ch;
+      color: rgba(255,255,255,0.78);
+      font-size: clamp(14px, 2.2vw, 18px);
+      line-height: 1.5;
+    }
+
+    .btn{
+      border: 0;
+      cursor: pointer;
+      padding: 14px 22px;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+      transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
+      user-select: none;
+    }
+    .btn:active{ transform: translateY(1px) scale(0.99); }
+
+    .primary{
+      background: linear-gradient(135deg, var(--pink), var(--rose));
+      color: white;
+      box-shadow: 0 14px 32px rgba(255,77,166,0.28);
+    }
+    .primary:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 18px 44px rgba(255,77,166,0.35);
+      filter: saturate(1.1);
+    }
+
+    .result{
+      margin: 16px auto 0;
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.16);
+      width: min(560px, 92vw);
+      display: none;
+      line-height: 1.5;
+    }
+    .result.show{ display:block; }
+    .result.good{
+      background: var(--good);
+      border-color: rgba(0, 255, 170, 0.25);
+    }
+    .result.bad{
+      background: var(--bad);
+      border-color: rgba(255, 80, 120, 0.25);
+    }
+
+    .footer{
+      margin-top: 18px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.55);
+    }
+
+    /* Gateway form */
+    .form{
+      margin: 18px auto 0;
+      width: min(520px, 92vw);
+      display: grid;
+      gap: 12px;
+    }
+    .input{
+      width: 100%;
+      padding: 14px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.22);
+      background: rgba(0,0,0,0.16);
+      color: white;
+      outline: none;
+      font-size: 16px;
+      backdrop-filter: blur(8px);
+    }
+    .input::placeholder{ color: rgba(255,255,255,0.55); }
+    .input:focus{
+      border-color: rgba(255,77,166,0.50);
+      box-shadow: 0 0 0 4px rgba(255,77,166,0.10);
+    }
+    .helper{
+      font-size: 13px;
+      color: rgba(255,255,255,0.65);
+    }
+
+    /* Valentine stage */
+    .stage{ display: none; }
+    .stage.show{ display: block; }
+
+    .btnRow{
+      margin-top: 18px;
+      display:flex;
+      justify-content:center;
+      gap: 16px;
+      flex-wrap: wrap;
+      position: relative;
+    }
+
+    .playground{
+      position: relative;
+      width: min(520px, 92vw);
+      height: 170px;
+      margin: 18px auto 0;
+      border-radius: 18px;
+      border: 1px dashed rgba(255,255,255,0.18);
+      background: rgba(0,0,0,0.12);
+      box-shadow: inset 0 0 0 1px rgba(255,77,166,0.08);
+      overflow: hidden;
+    }
+    .playHint{
+      margin-top: 10px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.65);
+    }
+
+    .no{
+      position: absolute;
+      left: 64%;
+      top: 58%;
+      transform: translate(-50%, -50%);
+      background: rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.92);
+      border: 1px solid rgba(255,255,255,0.20);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.35);
+      backdrop-filter: blur(8px);
+    }
+
+    .confetti{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      overflow:hidden;
+    }
+    .confetti span{
+      position:absolute;
+      top:-20px;
+      font-size: 16px;
+      opacity: 0.95;
+      animation: confettiFall linear forwards;
+      filter: drop-shadow(0 8px 18px rgba(0,0,0,0.35));
+    }
+    @keyframes confettiFall{
+      to { transform: translateY(120vh) rotate(180deg); opacity: 0; }
+    }
+
+    @media (max-width: 420px){
+      .playground{ height: 190px; }
+      .btn{ width: 180px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="sparkles"></div>
+  <div class="hearts" id="hearts"></div>
+
+  <div class="wrap">
+    <div class="card">
+      <div class="confetti" id="confetti"></div>
+
+      <!-- STAGE 1: GATEWAY -->
+      <div class="stage show" id="stageGateway">
+        <div class="badge">🔒 Romantic Gateway Check</div>
+        <h1>What is your future husband name? 💌</h1>
+        <p class="subtitle">
+          Enter carefully. The system is highly advanced and definitely not just 20 lines of JavaScript. 😌✨
+        </p>
+
+        <div class="form">
+          <input class="input" id="husbandInput" placeholder="Type here... (hint: Raj or Raj Aryan)" />
+          <button class="btn primary" id="submitHusband">Submit 💘</button>
+         </div>
+
+        <div class="result" id="gatewayResult"></div>
+
+        <div class="footer">Love is temporary. Validation logic is forever. 🧠💗</div>
+      </div>
+
+      <!-- STAGE 2: VALENTINE -->
+      <div class="stage" id="stageValentine">
+        <div class="badge">💌 Secret Mission: Steal Your Heart</div>
+        <h1>Will you be my Valentine? 💖</h1>
+        <p class="subtitle">
+          No pressure. Except destiny, the vibes, and this extremely romantic webpage begging for “Yes”. 🌹
+        </p>
+
+        <div class="btnRow">
+          <button class="btn primary" id="yesBtn">Yes 💘</button>
+        </div>
+
+        <div class="playground" id="playground">
+          <button class="btn no" id="noBtn">No 🙈</button>
+        </div>
+
+        <div class="playHint">Try clicking “No”. It’s allergic to rejection. 🏃‍♂️💨</div>
+
+        <div class="result" id="valentineResult"></div>
+
+        <div class="footer">Made with love, chaos, and a tiny bit of manipulation. 🥰</div>
+        
+      </div>
+    <div class="developerCredit" style="margin-top: 28px; font-size: 11px; color: rgba(255,255,255,0.45);">
+      This platform is developed by <b>Raj Aryan</b> ❤️
+    </div>
+    </div>
+  </div>
+
+  <script>
+    // ===== Background hearts =====
+    const heartsContainer = document.getElementById("hearts");
+    const heartChars = ["💖","💘","💗","💓","💕","🌹","✨","💞"];
+    function spawnHeart(){
+      const h = document.createElement("div");
+      h.className = "heart";
+      h.textContent = heartChars[Math.floor(Math.random()*heartChars.length)];
+      const left = Math.random()*100;
+      const dur = 6 + Math.random()*6;
+      const size = 14 + Math.random()*18;
+      h.style.left = left + "vw";
+      h.style.fontSize = size + "px";
+      h.style.animationDuration = dur + "s";
+      h.style.opacity = (0.55 + Math.random()*0.4).toFixed(2);
+      heartsContainer.appendChild(h);
+      setTimeout(()=> h.remove(), (dur+0.5)*1000);
+    }
+    setInterval(spawnHeart, 260);
+    for(let i=0;i<12;i++) setTimeout(spawnHeart, i*120);
+
+    // ===== Stage switch =====
+    const stageGateway = document.getElementById("stageGateway");
+    const stageValentine = document.getElementById("stageValentine");
+
+    function goToValentine(){
+      stageGateway.classList.remove("show");
+      stageValentine.classList.add("show");
+      // Ensure "No" button gets positioned correctly once visible
+      setTimeout(initNoBtnPosition, 50);
+    }
+
+    // ===== Gateway logic =====
+    const husbandInput = document.getElementById("husbandInput");
+    const submitHusband = document.getElementById("submitHusband");
+    const gatewayResult = document.getElementById("gatewayResult");
+
+    function normalizeName(s){
+      return (s || "")
+        .trim()
+        .replace(/\s+/g, " ")
+        .toLowerCase();
+    }
+
+    function handleGateway(){
+      const val = normalizeName(husbandInput.value);
+
+      gatewayResult.classList.add("show");
+
+      const isRaj = val === "raj";
+      const isRajAryan = val === "raj aryan";
+
+      if(isRaj || isRajAryan){
+        gatewayResult.classList.remove("bad");
+        gatewayResult.classList.add("good");
+
+        gatewayResult.innerHTML = `
+          <div style="font-weight:900; font-size:16px; margin-bottom:6px;">✅ Access granted 💚</div>
+          <div>You are almost correct, full name is <b>Raj Aryan</b> 💍</div>
+        `;
+
+        // Move to next stage after a short sweet delay
+        setTimeout(goToValentine, 1200);
+      } else {
+        gatewayResult.classList.remove("good");
+        gatewayResult.classList.add("bad");
+        gatewayResult.innerHTML = `
+          <div style="font-weight:900; font-size:16px; margin-bottom:6px;">❌ Wrong answer 😭</div>
+          <div>Try again. Hint: type <b>Raj</b> (or <b>Raj Aryan</b>).</div>
+        `;
+      }
+    }
+
+    submitHusband.addEventListener("click", handleGateway);
+    husbandInput.addEventListener("keydown", (e)=>{
+      if(e.key === "Enter") handleGateway();
+    });
+
+    // ===== Confetti hearts for YES =====
+    const confetti = document.getElementById("confetti");
+    function burstConfetti(){
+      const pieces = 60;
+      for(let i=0;i<pieces;i++){
+        const s = document.createElement("span");
+        s.textContent = ["💖","💘","✨","🌹","💞"][Math.floor(Math.random()*5)];
+        s.style.left = Math.random()*100 + "%";
+        s.style.animationDuration = (1.4 + Math.random()*1.6) + "s";
+        s.style.fontSize = (14 + Math.random()*18) + "px";
+        s.style.transform = `translateY(0) rotate(${Math.random()*60}deg)`;
+        confetti.appendChild(s);
+        setTimeout(()=> s.remove(), 3200);
+      }
+    }
+
+    // ===== Valentine logic =====
+    const valentineResult = document.getElementById("valentineResult");
+    const yesBtn = document.getElementById("yesBtn");
+yesBtn.addEventListener("click", ()=>{
+  burstConfetti();
+  valentineResult.classList.add("show");
+  valentineResult.classList.remove("bad");
+  valentineResult.classList.add("good");
+
+  valentineResult.innerHTML = `
+    <div style="font-size:18px; font-weight:900; margin-bottom:6px;">YAYYY!! 💍💖</div>
+    <div style="line-height:1.5;">
+      Officially locked in. Your Valentine era begins now. 🌹
+    </div>
+  `;
+
+  // 🚀 EMAIL TRIGGER
+  const subject = encodeURIComponent("She clicked YES 💖");
+  const body = encodeURIComponent
+
+    });
+
+    // ===== NO button dodge =====
+    const playground = document.getElementById("playground");
+    const noBtn = document.getElementById("noBtn");
+
+    function moveNoButton(){
+      const pgRect = playground.getBoundingClientRect();
+      const btnRect = noBtn.getBoundingClientRect();
+
+      const maxX = pgRect.width - btnRect.width;
+      const maxY = pgRect.height - btnRect.height;
+
+      const padding = 8;
+      const x = padding + Math.random() * Math.max(0, (maxX - padding*2));
+      const y = padding + Math.random() * Math.max(0, (maxY - padding*2));
+
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+      noBtn.style.transform = "translate(0,0)";
+    }
+
+    function initNoBtnPosition(){
+      if(!playground || !noBtn) return;
+      const pgRect = playground.getBoundingClientRect();
+      noBtn.style.left = (pgRect.width * 0.62) + "px";
+      noBtn.style.top = (pgRect.height * 0.55) + "px";
+      noBtn.style.transform = "translate(0,0)";
+    }
+
+    window.addEventListener("load", ()=>{
+      // Only init if valentine stage is visible (it isn't initially)
+      // but harmless to call anyway
+      initNoBtnPosition();
+    });
+
+    // Teleport when mouse comes close
+    playground.addEventListener("mousemove", (e)=>{
+      const btnRect = noBtn.getBoundingClientRect();
+      const bx = btnRect.left + btnRect.width/2;
+      const by = btnRect.top + btnRect.height/2;
+
+      const dx = e.clientX - bx;
+      const dy = e.clientY - by;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+
+      const threshold = 90;
+      if(dist < threshold){
+        moveNoButton();
+      }
+    });
+
+    noBtn.addEventListener("mouseenter", moveNoButton);
+    noBtn.addEventListener("click", ()=>{
+      moveNoButton();
+      valentineResult.classList.add("show");
+      valentineResult.classList.remove("good");
+      valentineResult.classList.add("bad");
+      valentineResult.innerHTML = `
+        <div style="font-weight:900; font-size:16px; margin-bottom:6px;">Nice try 😌</div>
+        <div>The “No” button is currently unavailable due to romance overload. 💗</div>
+      `;
+    });
+  </script>
+</body>
+</html>
